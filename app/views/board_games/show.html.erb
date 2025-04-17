@@ -1,0 +1,13 @@
+<h1><%= @board_game.title %></h1>
+
+<p><strong>Category:</strong> <%= @board_game.category %></p>
+<p><strong>Players:</strong> <%= @board_game.min_players %> - <%= @board_game.max_players %></p>
+<p><strong>Publisher:</strong> <%= @board_game.publisher %></p>
+<p><strong>Description:</strong> <%= @board_game.description %></p>
+
+<hr>
+
+<%= link_to "← Back to All Games", board_games_path %>
+
+
+
