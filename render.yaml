@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: sa17-act1-inniang
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sa17-act1-inniang-db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_SERVE_STATIC_FILES
+        value: true
+
+databases:
+  - name: sa17-act1-inniang-db
+    databaseName: sa17_act1_inniang_production
+    user: sa17_act1_inniang 
