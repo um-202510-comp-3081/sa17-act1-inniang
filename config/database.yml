@@ -22,13 +22,13 @@ default: &default
 
 development:
   <<: *default
-  database: board_game_library_development
+  database: sa17_act1_inniang_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: board_game_library
+  #username: sa17_act1_inniang
 
   # The password associated with the PostgreSQL role (username).
   #password:
@@ -56,7 +56,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: board_game_library_test
+  database: sa17_act1_inniang_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -79,17 +79,20 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-  database: board_game_library_production
-  username: board_game_library
-  password: <%= ENV['BOARD_GAME_LIBRARY_DATABASE_PASSWORD'] %>
+  primary: &primary_production
+    <<: *default
+    database: sa17_act1_inniang_production
+    username: sa17_act1_inniang
+    password: <%= ENV["SA17_ACT1_INNIANG_DATABASE_PASSWORD"] %>
   cache:
-    database: board_game_library_production_cache
+    <<: *primary_production
+    database: sa17_act1_inniang_production_cache
     migrations_paths: db/cache_migrate
   queue:
-    database: board_game_library_production_queue
+    <<: *primary_production
+    database: sa17_act1_inniang_production_queue
     migrations_paths: db/queue_migrate
   cable:
-    database: board_game_library_production_cable
+    <<: *primary_production
+    database: sa17_act1_inniang_production_cable
     migrations_paths: db/cable_migrate
