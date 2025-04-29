@@ -1,25 +1,24 @@
 databases:
-  - name: work-postgres # Fill in "name" from the Render PostgreSQL DB you created
+  - name: work-postgres
     plan: free
+
 services:
   - type: web
-    name: https://um-202510-comp-3081.github.io/sa17-act1-inniang/ # Fill in a name for your web app
+    name: work-rails-app
     runtime: ruby
     plan: free
-    region: Oregon # Fill in "region" to match the Render PostgreSQL DB's
-    Region -- Options are oregon (default), ohio, virginia, frankfurt, singapore
-    buildCommand: "./bin/render-build.sh" # This runs the script file we
-    created
+    region: oregon  # Options: oregon (default), ohio, virginia, frankfurt, singapore
+    buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec rails server"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: work-postgres # Fill in "name" from the Render PostgresQL DB you
-created
+          name: work-postgres
           property: connectionString
       - key: RAILS_ENV
         value: production
       - key: RAILS_MASTER_KEY
         sync: false
       - key: WEB_CONCURRENCY
-        value: 2 # sensible default
+        value: "2"
+
