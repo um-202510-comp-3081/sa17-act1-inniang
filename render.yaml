@@ -1,23 +1,24 @@
-# Exported from Render on 2025-04-29T20:50:02Z
-services:
-- type: web
-  name: sa17-act1-inniang
-  runtime: ruby
-  repo: https://github.com/um-202510-comp-3081/sa17-act1-inniang
-  plan: free
-  envVars:
-  - key: WEB_CONCURRENCY
-    sync: false
-  - key: RAILS_ENV
-    sync: false
-  - key: DATABASE_URL
-    sync: false
-  region: oregon
-  buildCommand: ./bin/render-build.sh
-  startCommand: bundle exec rails server
-version: "1"
- 
 
-    
+ 
+services:
+  - type: web
+    name: sa17-act1-inniang
+    runtime: ruby
+    plan: free
+    region: oregon
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec rails server"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: work-postgres   # <-- update this
+          property: connectionString
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: WEB_CONCURRENCY
+        value: 2
+
 
 
