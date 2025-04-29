@@ -2,16 +2,24 @@
 # exit on error
 set -o errexit
 
-bundle install
-bundle exec rake assets:precompile
-bundle exec rake assets:clean
-bundle exec rake db:migrate
+# --- (On Mac, we assume Node.js and Yarn are already installed) ---
 
-# If you're using a Free instance type (which we are), you need to
-# perform database migrations in the build command.
-# You cannot drop the managed database with a rails command, so do
-# not edit migration files -- add new ones.
+# Install Ruby Gems and Node packages
+bundle install
+yarn install --check-files
+
+# Export Rails master key (if available locally)
+if [ -f config/master.key ]; then
+  export RAILS_MASTER_KEY=$(cat config/master.key)
+else
+  echo "⚠️  Warning: config/master.key not found. Rails might fail if it needs credentials."
+fi
+
+# Precompile assets
+bundle exec rails assets:precompile
+bundle exec rails assets:clean
+
+# Database setup
 bundle exec rails db:migrate
-# If you need to apply seed data, you can use this command to delete
-# the existing data and create it fresh on each deploy.
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:seed:replant
+
